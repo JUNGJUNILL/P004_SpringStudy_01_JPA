@@ -4,6 +4,7 @@ package jpabook.jpashop.controller;
 import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.service.ItemService;
+import jpabook.jpashop.service.UpdateItemDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,11 +69,11 @@ public class ItemController {
 
 
     @PostMapping("/items/{itemId}/edit")
-    public String updateItem(@ModelAttribute("form") BookForm form){
+    public String updateItem(@PathVariable("itemId") Long itemId,@ModelAttribute("form") BookForm form){
+/*
+        Book book = new Book(); //준영속 엔티티 : 영속성 컨텍스트(JPA)가 더는 관리하지 않는 엔티티를 말한다.
 
-        Book book = new Book();
-
-        book.setId(form.getId());
+        book.setId(form.getId()); //기존의 식별자(key)를 가지고 있으면 준영속 엔티티로 볼 수 있다.
         book.setName(form.getName());
         book.setName(form.getName());
         book.setPrice(form.getPrice());
@@ -80,7 +81,17 @@ public class ItemController {
         book.setAuthor(form.getAuthor());
         book.setIsbn(form.getIsbn());
 
-        itemService.save(book);
+        itemService.save();
+
+
+*/
+
+        UpdateItemDto dto = new UpdateItemDto(form.getName(),form.getPrice(),form.getStockQuantity());
+        //변경 감지용 메서드 사용
+        itemService.updateItem(itemId,dto);
+
+
+
         return "redirect:/items";
 
 

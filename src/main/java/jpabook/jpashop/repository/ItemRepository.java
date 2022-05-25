@@ -13,6 +13,7 @@ public class ItemRepository {
 
     private final EntityManager em;
 
+    //병합 사용
     public void save(Item item){
         if(item.getId()==null){
             em.persist(item);
